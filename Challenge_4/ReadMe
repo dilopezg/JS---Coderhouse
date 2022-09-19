@@ -33,3 +33,6 @@ npm start
 
 ## Ejecutar en desarrollo
 npm run dev
+
+## Probar funcionalidad
+exportar el archivo Challenge_4.postman_collection.json a Postman
