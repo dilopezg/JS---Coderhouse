@@ -12,20 +12,21 @@ const productos = new Productos();
 router.post('/productos', (req, res) => {
   let { body: data } = req
   productos.save(data) 
+  console.log(productos.save(data) )
 
-  res.redirect('/api/productos');
+  res.render('index');
 })
 
+
 router.get('/productos', (_, res) => {
-    const producto_getall = productos.getAll()
-    console.log(producto_getall)
-    res.render('index',producto_getall)
+    
+    res.render('index')
 })
 
 router.get('/', (_, res) => {
-  const producto_getall = productos.getAll()
-  console.log(producto_getall)
-  res.render('layout',producto_getall)
+  const productos_list = productos.getAll()
+  console.log(productos_list.length)
+  res.render('productos',{productos_list})
 })
 
 module.exports = router;
