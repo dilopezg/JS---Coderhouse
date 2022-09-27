@@ -11,7 +11,6 @@ router.post('/productos', (req, res) => {
   res.render('index');
 })
 
-
 router.get('/productos', (_, res) => {    
     res.render('index')
 })
