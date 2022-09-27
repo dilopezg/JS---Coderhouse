@@ -13,15 +13,15 @@ const ENV = process.env.NODE_ENV
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-//app.use('/static', express.static(path.join(__dirname, 'public')))
 
-
+/*
 app.engine('handlebars', handlebars.engine())
 app.set('view engine', 'handlebars')
 app.set('views', './views')
+*/
 
 app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'pug');
+app.set('view engine', 'pug');
 //app.set('view engine', 'ejs');
 
 app.use('/api', productos)
