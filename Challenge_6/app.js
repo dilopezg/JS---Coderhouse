@@ -51,7 +51,6 @@ httpServer.listen(PORT, () => {
     console.log(`Environment:${ENV}`)
 });
 
-/* CHAT */
 io.on("connection", (socket) => {
     socket.emit("messages", messages);
   
