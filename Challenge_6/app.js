@@ -1,63 +1,66 @@
-const handlebars = require("express-handlebars");
-const express = require('express')
-const { Server: HttpServer } = require("http");
-const { Server: IOServer } = require("socket.io");
-const Productos = require('./routes/class_productos');
-
-const PORT = process.env.NODE_PORT
-const ENV = process.env.NODE_ENV
-
-
+const express = require('express');
 const app = express();
-const httpServer = new HttpServer(app);
-const io = new IOServer(httpServer);
+const handlebars = require('express-handlebars');
+const http = require('http').Server(app);
+const productos = require('./api/producto');
+const MessageController = require("./api/MessageController");
+const handlerMessage = new MessageController("./mensajes.txt");
+
+const io = require('socket.io')(http);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("./views/layouts"));
-
-const productos = new Productos();
-const messages = []
+app.use(express.static(__dirname + '/public'));
 
 app.engine(
-  "hbs",
-  handlebars.engine({
-    extname: ".hbs",
-    partialsDir: __dirname + "/views/partials",
-  })
+    "hbs",
+    handlebars({
+        extname: ".hbs",
+        defaultLayout: 'index.hbs',
+    })
 );
-app.set("views", "./views");
-app.set("views engine", "hbs");
 
-app.get("/", (req, res) => {
-  let content = productos.productos;
-  let boolean = content.length !== 0;
-  return res.render("layouts/main.hbs", {
-    list: content,
-    showList: boolean,
-  });
-});
+app.set("view engine", "hbs");
+app.set("views", __dirname + '/views');
 
-app.post("/", (req, res) => {
-  productos.save(req.body);
-  let content = productos.productos;
-  let boolean = content.length !== 0;
-  return res.render("layouts/main.hbs", { list: content, showList: boolean });
-});
+io.on('connection', async socket => {
 
-httpServer.listen(PORT, () => {
-    console.log(`Servidor http esta escuchando en el puerto ${httpServer.address().port}`)
-    console.log(`http://localhost:${httpServer.address().port}`)
-    console.log(`Environment:${ENV}`)
-});
+        console.log('Nuevo cliente conectado!');    
+    socket.emit('productos', productos.listar());
+    
+    socket.on('update', data => {
+        io.sockets.emit('productos', productos.listar());
+    });
 
-/* CHAT */
-io.on("connection", (socket) => {
-    socket.emit("messages", messages);
+    socket.emit("history-messages", await handlerMessage.getAll());
   
     socket.on("new-message", (data) => {
       data.time = new Date().toLocaleString();
-      messages.push(data);
-      io.sockets.emit("messages", [data]);
+      handlerMessage.save(data);
+      io.sockets.emit('notification', data);
     });
-  });
+
+    socket.on('disconection', () => {
+      console.log('Se desconecto el cliente con el id', socket.id)
+    })
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.message);
+    return res.status(500).send('Algo se rompio!');
+});
+
+const productosRouter = require('./routes/productos');
+const indexRouter = require('./routes/chat')
+app.use('/api', productosRouter);
+app.use('/api', indexRouter)
+
+const PORT = process.env.PORT || 3000;
+
+const server = http.listen(PORT, () => {
+    console.log(`servidor escuchando en http://localhost:${PORT}`);
+});
+
+server.on('error', error => {
+    console.log('error en el servidor:', error);
+});
