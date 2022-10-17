@@ -2,9 +2,9 @@ const express = require('express');
 const app = express();
 const handlebars = require('express-handlebars');
 const http = require('http').Server(app);
-const productos = require('./api/producto');
-const MessageController = require("./api/MessageController");
-const handlerMessage = new MessageController("./mensajes.txt");
+const productos = require('./db/index_productos');
+const chats = require('./db/index_chat');
+const handlerMessage = new chats();
 
 const io = require('socket.io')(http);
 
@@ -27,18 +27,21 @@ io.on('connection', async socket => {
 
     console.log('Nuevo cliente conectado!');  
 
-    socket.emit('productos', productos.listar());
+    await productos.createTable()
+    await handlerMessage.createTable()
 
-    socket.on("new-producto", (data) => {
+    socket.emit('productos', await productos.listar());
+
+    socket.on("new-producto", async (data) => {
         productos.guardar(data);
-        io.sockets.emit('productos', productos.listar());
+        io.sockets.emit('productos', await productos.listar());
       });
     
     socket.emit("history-messages", await handlerMessage.getAll());
   
-    socket.on("new-message", (data) => {
+    socket.on("new-message", async (data) => {
       data.time = new Date().toLocaleString();
-      handlerMessage.save(data);
+      await handlerMessage.save(data);
       io.sockets.emit('notification', data);
     });
 
@@ -57,7 +60,7 @@ const indexRouter = require('./routes/chat');
 app.use('/api', productosRouter);
 app.use('/api', indexRouter)
 
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3030;
 
 const server = http.listen(PORT, () => {
     console.log(`servidor escuchando en http://localhost:${PORT}`);
