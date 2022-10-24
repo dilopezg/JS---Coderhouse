@@ -1,0 +1,49 @@
+db.productos.insertMany([
+  { title: 'lapiz', price: 120, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/pencil-pen-stationery-school-64.png'},
+  { title: 'libreta', price: 230, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/book-note-paper-school-64.png'},
+  { title: 'calculadora', price: 360, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-64.png'},
+  { title: 'mochila', price: 450, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/bag-pack-container-school-256.png'},
+  { title: 'reloj', price: 1510, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/clock-stopwatch-timer-time-64.png'},
+  { title: 'probeta', price: 1670, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/tube-lab-science-school-64.png'},
+  { title: 'mapamundi', price: 1780, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-64.png'},
+  { title: 'tablero', price: 2890, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/board-math-class-school-64.png'},
+  { title: 'microscopio', price: 3250, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/microscope-lab-science-school-64.png'},
+  { title: 'bus', price: 4999, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/bus-vehicle-transport-school-64.png'}
+])
+
+db.mensajes.insertMany([
+    {email: 'Usuario_profesor@coderhouse', message: 'Bienvenido', time: '10/23/2022, 5:10:58 PM'},
+    {email: 'Usuario_estudiante@coderhouse', message: 'Hola', time: '10/23/2022, 5:11:58 PM'},
+    {email: 'Usuario_tutor@coderhouse', message: 'Buenas noches', time: '10/23/2022, 5:12:58 PM'},
+    {email: 'Usuario_profesor@coderhouse', message: 'Ya hicieron el desafio', time: '10/23/2022, 5:13:58 PM'},
+    {email: 'Usuario_estudiante@coderhouse', message: 'Si, ya fue entregado', time: '10/23/2022, 5:14:58 PM'},
+    {email: 'Usuario_tutor@coderhouse', message: 'Pronto sera calificado', time: '10/23/2022, 5:15:58 PM'},
+    {email: 'Usuario_profesor@coderhouse', message: 'Muchas gracias por hacer el desafio', time: '10/23/2022, 5:16:58 PM'},
+    {email: 'Usuario_estudiante@coderhouse', message: 'Gracias por la explicación', time: '10/23/2022, 5:17:58 PM'},
+    {email: 'Usuario_tutor@coderhouse', message: 'Ya fue calificado el entregable', time: '10/23/2022, 5:18:58 PM'},
+    {email: 'Usuario_profesor@coderhouse', message: 'Nos vemos la proxima', time: '10/23/2022, 5:19:58 PM'}    
+])
+db.productos.find({});
+db.mensajes.find({});
+db.productos.estimatedDocumentCount();
+db.mensajes.estimatedDocumentCount();
+
+db.productos.insertOne(
+    { title: 'manzana', price: 111, thumbnail: 'https://cdn3.iconfinder.com/data/icons/education-209/64/apple-fruit-science-school-64.png'}
+);
+
+db.productos.find({ price: { $lt: 1000 } });
+
+db.productos.find({ $and: [{ price: { $gt: 1000 } }, { price: { $lt: 3000 } }] });
+
+db.productos.find({ price: { $gt: 3000 } });
+
+db.productos.find({}, { title: 1, _id: 0 }).sort({price: 1}).limit(1).skip(2);
+
+db.productos.updateMany({}, {$set: {stock: 100}}, {upsert: true});
+
+db.productos.updateMany({price: {$gt: 4000}}, {$set: {stock: 0}});
+
+db.productos.deleteMany({price: {$lt: 1000}});
+
+db.createUser({user: 'pepe', pwd: 'asd456', roles: [{role: 'read', db: 'ecommerce'}]})
