@@ -1,0 +1,38 @@
+[
+  {
+    "author": {
+      "email": "Usuario@coderhouse",
+      "name": "Usuario",
+      "lastname": "Coderhouse",
+      "age": 25,
+      "alias": "Usercoder",
+      "avatar": "https://cdn2.iconfinder.com/data/icons/ios-7-icons/50/user_female4-64.png"
+    },
+    "message": "Bienvenido",
+    "time": "10/11/2022, 5:10:58 PM"
+  },
+  {
+    "author": {
+      "email": "dilialopezg@gmail.com",
+      "name": "dilia",
+      "lastname": "lopez",
+      "age": "30",
+      "alias": "dilopezg",
+      "avatar": "https://cdn1.iconfinder.com/data/icons/user-avatar-20/64/51-woman-64.png"
+    },
+    "message": "hola a todos",
+    "time": "11/7/2022, 7:02:02 PM"
+  },
+  {
+    "author": {
+      "email": "dilialopezg@gmail.com",
+      "name": "dilia",
+      "lastname": "lopez",
+      "age": "30",
+      "alias": "dilopezg",
+      "avatar": "https://cdn1.iconfinder.com/data/icons/user-avatar-20/64/51-woman-64.png"
+    },
+    "message": "hola again",
+    "time": "11/7/2022, 7:09:03 PM"
+  }
+]
