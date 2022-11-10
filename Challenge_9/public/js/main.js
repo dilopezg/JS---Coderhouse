@@ -77,20 +77,20 @@
     });
   
     socket.on('history-messages', (data) => {
-      const autorScheme = new schema.Entity(
+      const autorScheme = new normalizr.schema.Entity(
             'author',
             {},
             { idAttribute: 'email' }
         );
     
-      const postScheme = new schema.Entity('post', {
+      const postScheme = new normalizr.schema.Entity('post', {
             author: autorScheme,
         });
-      const mensajeTotla = new schema.Entity('mensaje', {
+      const mensajeTotla = new normalizr.schema.Entity('mensaje', {
             post: [postScheme],
         }); 
 
-      const dataReversed = denormalize(
+      const dataReversed = normalizr.denormalize(
             data.result,
             mensajeTotla,
             data.entities
