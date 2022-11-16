@@ -25,11 +25,9 @@
       li.innerHTML = `
       <div>
       <em class="text-primary font-weight-bolder">${data.author.email}</em>
-      [<em class="text-danger">${data.time}</em>]: <em class="text-success fst-italic">${data.message} </em> <img src="${data.author.avatar}"/>
+      [<em class="text-danger">${data.date}</em>]: <em class="text-success fst-italic">${data.message} </em> <img src="${data.author.avatar}"/>
       </div>`;
       listMessages.appendChild(li);
-
-      console.log('entro al showmessage');
     }
 
 
@@ -109,8 +107,8 @@
       );
       console.log(dataReversed, originalSize);
       tituloCompresion.innerText = '';
-      console.log(`Porcentaje de compresion: ${totalTotal}%`);
-      tituloCompresion.innerText = `Porcentaje de compresion: ${totalTotal}%`;
+      console.log(`Porcentaje de compresión: ${totalTotal}%`);
+      tituloCompresion.innerText = `Porcentaje de compresión: ${totalTotal}%`;
       const messages = dataReversed.post;
       listMessages.innerHTML = '';
       messages.forEach((messages) => {
@@ -119,9 +117,45 @@
     });
   
     socket.on('notification', (data) => {
-      data.time = new Date().toLocaleString();
-      messages.push(data);
-      showMessage(data);
+      const autorScheme = new normalizr.schema.Entity(
+            'author',
+            {},
+            { idAttribute: 'email' }
+        );
+    
+      const postScheme = new normalizr.schema.Entity('post', {
+            author: autorScheme,
+        });
+      const mensajeTotla = new normalizr.schema.Entity('mensaje', {
+            post: [postScheme],
+        }); 
+
+      const dataReversed = normalizr.denormalize(
+            data.result,
+            mensajeTotla,
+            data.entities
+      );
+
+      console.log(dataReversed);
+
+      const originalSize = JSON.stringify(dataReversed).length;
+      const normalizedSize = JSON.stringify(data).length;
+      const resultSata = (normalizedSize * 100) / originalSize;
+      let totalTotal = resultSata.toFixed(2);
+      console.log(data, normalizedSize);
+
+      console.log(
+            '--------------------------------------------------------------------'
+      );
+      console.log(dataReversed, originalSize);
+      tituloCompresion.innerText = '';
+      console.log(`Porcentaje de compresión: ${totalTotal}%`);
+      tituloCompresion.innerText = `Porcentaje de compresión: ${totalTotal}%`;
+      const messages = dataReversed.post;
+      listMessages.innerHTML = '';
+      messages.forEach((messages) => {
+            showMessage(messages);
+      });
     });
     
     socket.on('productos', productos => {

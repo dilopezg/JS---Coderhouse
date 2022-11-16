@@ -43,7 +43,9 @@ io.on('connection', async socket => {
     socket.on("new-message", async (data) => {
       data.time = new Date().toLocaleString();
       await handlerMessage.save(data);
-      io.sockets.emit('notification', data);
+      const dataMensajes = await handlerMessage.getAll();
+      const data_toshow = await normalizar(dataMensajes);
+      io.sockets.emit('notification', data_toshow);
     });
 
     socket.on('disconection', () => {
