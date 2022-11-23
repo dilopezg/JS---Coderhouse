@@ -1,0 +1,30 @@
+{
+  "name": "challenge_10",
+  "version": "1.0.0",
+  "description": "challenge_10",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "./node_modules/nodemon/bin/nodemon.js --exec 'node -r dotenv/config' ./app.js"
+  },
+  "author": "Dilia LG",
+  "license": "ISC",
+  "devDependencies": {
+    "dotenv": "^16.0.2",
+    "nodemon": "^2.0.20"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^7.6.0",
+    "connect-mongo": "^4.6.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.3",
+    "knex": "^2.3.0",
+    "mongodb": "^4.12.0",
+    "mysql": "^2.18.1",
+    "normalizr": "^3.6.2",
+    "socket.io": "^4.1.2",
+    "sqlite3": "^5.1.2",
+    "uuid": "^9.0.0"
+  }
+}
