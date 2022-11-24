@@ -30,7 +30,6 @@ router.post('/logout', (req, res) => {
         if (!error) {
             let data = { user: email};
             res.render('logout', data);
-            res.redirect('/sign-in');
         } else {
             res.send('Ocurrio un  error', error.message);
         }

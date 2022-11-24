@@ -4,7 +4,9 @@
             
             <h1>Bienvenid@ {{user}}</h1>
             <div >
-            <a href="/logout" class='btn btn-outline-dark'>Logout</a>
+            <form action="/logout" method="POST">
+            <button class='btn btn-outline-dark'>Logout</button>
+            <input type="hidden" name="username" value="{{user}}"></form>
             </div>
                                 
             <h1>Ingrese Producto</h1>
