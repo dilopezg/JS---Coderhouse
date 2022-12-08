@@ -1,0 +1,26 @@
+NODEMON LIST COMMAND
+nodemon app.js -p 8081 -m fork
+nodemon app.js -p 8082 -m cluster
+
+
+PM2 LIST COMMAND
+pm2 start ./app.js --name="instance-01" --watch -- -p 8081
+pm2 start ./app.js --name="instance-02" --watch -i max -- -p 8082
+
+pm2 start ./app.js --name="instance-01" -- -p 8081 -m cluster
+pm2 start ./app.js --name="instance-02" -- -p 8080
+
+
+pm2 start ./app.js --name="instance-01"  -- -p 8080
+pm2 start ./app.js --name="instance-02"  -- -p 8082
+pm2 start ./app.js --name="instance-03"  -- -p 8083
+pm2 start ./app.js --name="instance-04"  -- -p 8084
+pm2 start ./app.js --name="instance-05"  -- -p 8085
+
+pm2 monit
+
+
+FOREVER LIST COMMAND
+forever -w start app.js -p 8081 -m fork
+forever -w start app.js -p 8082 -m cluster
+forever list
