@@ -11,11 +11,25 @@ const session = require('express-session')
 const passport = require('passport');
 const LocalStrategy  = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
+const minimist = require("minimist") ;
 const UserModel = require('./models/user.js');
 const { init } = require('./db/mongodb.js');
 const mongoose = require('mongoose');
 
 const URL = process.env.MONGODB_URI
+
+const opts = {
+    default: {
+          puerto: 0,
+    },
+    alias: {
+          p: 'puerto',
+    },
+};
+
+const params = minimist(process.argv.slice(2), opts);
+
+const PORT = params.puerto || 3030;
 
 mongoose.connect(URL)
 
@@ -160,7 +174,6 @@ const apiRouter = require('./routes/random.js');
 app.use('/', Router)
 app.use('/api', apiRouter);
 
-const PORT = process.env.PORT || 3030;
 
 const server = http.listen(PORT, () => {
     console.log(`servidor escuchando en http://localhost:${PORT}`);
