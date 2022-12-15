@@ -17,6 +17,7 @@ const mongoose = require('mongoose');
 const minimist = require("minimist") ;
 const os = require("os") ;
 const cluster = require("cluster") ;
+const autocannon = require ('autocannon')
 
 const params = minimist(process.argv.slice(2), {
     alias : {
@@ -188,7 +189,7 @@ const params = minimist(process.argv.slice(2), {
     app.use('/', Router)
     app.use('/api', apiRouter);
 
-    const PORT = process.env.PORT || 3030;
+    //7const PORT = process.env.PORT || 3030;
 
     const server = http.listen(PORT, () => {
         console.log(`servidor escuchando en http://localhost:${PORT}`);

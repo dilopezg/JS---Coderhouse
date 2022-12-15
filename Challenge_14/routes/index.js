@@ -6,7 +6,7 @@ const registro = require('./registro.js')
 const productosRouter = require('./productos');
 const indexRouter = require('./chat');
 const info = require('./info');
-const { logger } = require('../logger/logger.js');
+const {logger}  = require('../logger/logger.js');
 
 router.use('/', productosRouter, indexRouter, login, registro,info);
 

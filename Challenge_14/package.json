@@ -4,7 +4,8 @@
   "description": "challenge_14",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "0X app.js",
+    "test": "node benchmark.js",
     "dev": "./node_modules/nodemon/bin/nodemon.js --exec 'node -r dotenv/config' ./app.js"
   },
   "author": "Dilia LG",
@@ -15,6 +16,7 @@
   },
   "dependencies": {
     "@faker-js/faker": "^7.6.0",
+    "autocannon": "^7.10.0",
     "bcrypt": "^5.1.0",
     "compression": "^1.7.4",
     "express": "^4.18.2",

@@ -17,7 +17,7 @@ router.get('/info',compression(), (req, res, next) => {
                 pid: process.pid,
                 folder: process.cwd(),
           };
-          console.log(data);
+          //console.log(data);
           res.render('./info', data);
       } catch (error) {
           logger.error(`${error.message}`)
