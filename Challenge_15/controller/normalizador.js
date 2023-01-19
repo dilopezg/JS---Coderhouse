@@ -1,5 +1,5 @@
-const { schema, normalize, denormalize } = require('normalizr');
-const { v4: uuidv4 } = require('uuid');
+import { schema, normalize, denormalize } from 'normalizr';
+import {uuidv4 } from 'uuid';
 
 function Normalizador(data) {
 
@@ -48,4 +48,4 @@ function Normalizador(data) {
     return dataNormalized;
 }
 
-module.exports = Normalizador;
+export default Normalizador;

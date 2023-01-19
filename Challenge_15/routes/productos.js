@@ -1,12 +1,13 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const {productosDao} = require('../daos/index.js');
-const { logger } = require( "../logger/logger.js");
+import { logger } from  "../logger/logger.js";
+import ProductoService from '../services/productos.services';
+
 
 router.get('/productos/listar', (req, res) => {
     try{
         logger.info(`Se accedio a la ruta ${req.originalUrl} con el metodo ${req.method}`)
-        res.json(productosDao.listar());
+        res.json(ProductoService.listar());
     }catch(error) {
             logger.error(`${error.message}`)
             next(error);
@@ -18,7 +19,7 @@ router.get('/productos/listar/:id', (req, res) => {
     try{
         logger.info(`Se accedio a la ruta ${req.originalUrl} con el metodo ${req.method}`)
         let { id } = req.params;
-        res.json(productosDao.buscarPorId(id));
+        res.json(ProductoService.buscarPorId(id));
     }catch(error) {
         logger.error(`${error.message}`)
         next(error);
@@ -29,7 +30,7 @@ router.post('/productos/guardar', (req, res) => {
     try{
         logger.info(`Se accedio a la ruta ${req.originalUrl} con el metodo ${req.method}`)
         let producto = req.body;
-        res.json(productosDao.guardar(producto));
+        res.json(ProductoService.guardar(producto));
     }catch(error) {
         logger.error(`${error.message}`)
         next(error);
@@ -42,7 +43,7 @@ router.put('/productos/actualizar/:id', (req, res) => {
         logger.info(`Se accedio a la ruta ${req.originalUrl} con el metodo ${req.method}`)
         let { id } = req.params
         let producto = req.body
-        res.json(productosDao.actualizar(id, producto));
+        res.json(ProductoService.actualizar(id, producto));
     }catch(error) {
         logger.error(`${error.message}`)
         next(error);
@@ -54,7 +55,7 @@ router.delete('/productos/borrar/:id', (req, res) => {
     try{
         logger.info(`Se accedio a la ruta ${req.originalUrl} con el metodo ${req.method}`)
         let { id } = req.params;
-        res.json(productosDao.borrar(id));
+        res.json(ProductoService.borrar(id));
     }catch(error) {
         logger.error(`${error.message}`)
         next(error);
@@ -64,7 +65,7 @@ router.delete('/productos/borrar/:id', (req, res) => {
 router.get('/productos-test', (req, res) => { 
     try{
         logger.info(`Se accedio a la ruta ${req.originalUrl} con el metodo ${req.method}`)  
-        let prods = productosDao.generar();
+        let prods = ProductoService.generar();
         res.render('lista', { productos: prods, hayProductos: prods.length });
     }catch(error) {
         logger.error(`${error.message}`)
@@ -72,4 +73,4 @@ router.get('/productos-test', (req, res) => {
     } 
 });
 
-module.exports = router;
+export default router;

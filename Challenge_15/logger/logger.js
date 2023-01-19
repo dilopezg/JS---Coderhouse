@@ -1,5 +1,5 @@
-const winston = require('winston')
-const { createLogger} = require('winston')
+import winston from 'winston'
+import { createLogger} from 'winston'
 
 const logger = createLogger({
         level: "info",
@@ -11,4 +11,4 @@ const logger = createLogger({
     });
 
 
-module.exports =  {logger};
+export default  {logger};

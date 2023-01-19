@@ -1,7 +1,8 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const passport = require('passport');
-const { logger } = require( "../logger/logger.js");
+import { logger } from  "../logger/logger.js";
+import passport from 'passport';
+
 
 router.get('/', (req, res) => {
     logger.info(`Se accedio a la ruta ${req.originalUrl} con el metodo ${req.method}`)
@@ -42,4 +43,4 @@ router.post('/logout', (req, res) => {
     });
 });
 
-module.exports = router;
+export default router;

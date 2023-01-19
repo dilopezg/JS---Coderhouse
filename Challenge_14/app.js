@@ -45,6 +45,7 @@ const params = minimist(process.argv.slice(2), {
   } else {
 
     const URL = process.env.MONGODB_URI
+    console.log(URL);
 
     mongoose.connect(URL)
 
@@ -189,7 +190,7 @@ const params = minimist(process.argv.slice(2), {
     app.use('/', Router)
     app.use('/api', apiRouter);
 
-    //7const PORT = process.env.PORT || 3030;
+    //const PORT = process.env.PORT || 3030;
 
     const server = http.listen(PORT, () => {
         console.log(`servidor escuchando en http://localhost:${PORT}`);

@@ -1,21 +1,25 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-const handlebars = require('express-handlebars');
-const http = require('http').Server(app);
-const {productosDao} = require('../daos/index.js');
-const {mensajesDao} = require('../daos/index.js');
-const normalizar = require('./controller/normalizador')
-const session = require('express-session')
-const passport = require('passport');
-const LocalStrategy  = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
-const UserModel = require('./models/user.js');
-const { init } = require('./db/mongodb.js');
-const mongoose = require('mongoose');
-const minimist = require("minimist") ;
-const os = require("os") ;
-const cluster = require("cluster") ;
-const autocannon = require ('autocannon')
+import handlebars from 'express-handlebars';
+import {http} from 'http';
+const server = http.createServer(app);
+import {productosDao} from './daos/index.js';
+import {mensajesDao} from './daos/index.js';
+import normalizar from './controller/normalizador'
+import session from 'express-session'
+import passport from 'passport';
+import {Strategy as LocalStrategy}  from 'passport-local';
+import bcrypt from 'bcrypt';
+import UserModel from './models/user.js';
+import { init } from './db/mongodb.js';
+import mongoose from 'mongoose';
+import minimist from "minimist" ;
+import os from "os" ;
+import cluster from "cluster" ;
+import Newserver from 'socket.io';
+import autocannon  from 'autocannon';
+import Router from './routes/index.js';
+import apiRouter from './routes/random.js';
 
 const params = minimist(process.argv.slice(2), {
     alias : {
@@ -47,7 +51,8 @@ const params = minimist(process.argv.slice(2), {
 
     mongoose.connect(URL)
 
-    const io = require('socket.io')(http);
+    
+    const io = new Newserver(httpServer)
 
     passport.use('sign-in', new LocalStrategy({ usernameField: 'email',}, (email, password, done) => {
                 UserModel.findOne({ email })
@@ -183,8 +188,7 @@ const params = minimist(process.argv.slice(2), {
         return res.status(500).send('Algo se rompio!');
     });
 
-    const Router = require('./routes/index.js');
-    const apiRouter = require('./routes/random.js');
+    
     app.use('/', Router)
     app.use('/api', apiRouter);
 

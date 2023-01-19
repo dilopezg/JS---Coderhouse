@@ -1,6 +1,6 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const { logger } = require( "../logger/logger.js");
+import { logger } from  "../logger/logger.js";
 
 function random (repeat) {
       let object = {};
@@ -28,4 +28,4 @@ router.get('/randoms', async (req, res, next) => {
       }
 });
 
-module.exports = router;
+export default router;

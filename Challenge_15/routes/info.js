@@ -1,8 +1,9 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
-const os = require("os") ;
-const compression = require('compression')
-const { logger } = require( "../logger/logger.js");
+import { logger } from  "../logger/logger.js";
+import os from "os" ;
+import compression from 'compression';
+
 
 router.get('/info',compression(), (req, res, next) => {
     try {
@@ -25,4 +26,4 @@ router.get('/info',compression(), (req, res, next) => {
     }
 });
 
-module.exports = router;
+export default router;
